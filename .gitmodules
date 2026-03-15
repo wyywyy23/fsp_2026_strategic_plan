@@ -1,0 +1,6 @@
+[submodule "tex/acronyms"]
+	path = tex/acronyms
+	url = git@github.com:ONE-Systems-Lab/lab-acronyms.git
+[submodule "cls"]
+	path = cls
+	url = git@github.com:ONE-Systems-Lab/lab-document.git

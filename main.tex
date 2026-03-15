@@ -1,0 +1,197 @@
+\documentclass[nsf, sidenote, draft]{cls/oneproposal}
+
+% ======================================================================
+% Demo document for the `oneproposal` class
+%   - NSF profile (Palatino, 10pt, 1in margins)
+%   - draft mode (watermark, line numbers, comments visible)
+%   - sidenote mode (margin comments with global counter)
+% ======================================================================
+
+% ----------------------------------------------------------------------
+% Acronym definitions (handled by `acro` loaded in the class)
+%   The barrier between summary and description is inserted by
+%   \maketitledescription via \acbarrier, so acronyms "reset" there.
+% ----------------------------------------------------------------------
+
+% ----------------------------------------------------------------------
+% Extra annotation authors
+%   The class already pre-registers:
+%     - yw        → "Y.W."
+%     - anonymous → "Anonymous"
+%   Below we demonstrate how to add custom display names.
+% ----------------------------------------------------------------------
+\input{tex/acronyms/acronyms.tex}
+
+\begin{document}
+
+% ======================================================================
+% Project Summary (kept intentionally short to fit on one page)
+% ======================================================================
+
+\title{Demo of the \texttt{oneproposal} Class}
+\author{Yuyang Wang, \emph{University of Connecticut, Storrs, CT 06269}}
+
+\maketitlesummary
+
+% ----------------------------------------------------------------------
+% Introductory paragraph with acronyms.
+%   - First use of \ac{cpo} and \ac{ai} here prints long+short form.
+%   - Below we call them again to show the short-from behaviour.
+% ----------------------------------------------------------------------
+% ----------------------------------------------------------------------
+% Summary with acronym and annotation demonstrations.
+% ----------------------------------------------------------------------
+This demo illustrates the core features of the \texttt{oneproposal}
+class, beginning with a one-page project summary.
+The class is compiled here with the options \verb|[nsf,draft,sidenote]|,
+so you can see the line numbers, watermark, and margin annotations that
+facilitate collaborative editing.  The scientific context is based on
+\ac{cpo} for scalable \ac{ai} and \ac{hpc} systems. In this first
+occurrence, \ac{cpo} and \ac{ai} are printed in their long+short form, while subsequent uses show only the short form, following the standard behaviour of \texttt{acro}. Note that if you do not call \verb|\ac{hpc}| for a second time, only the long form will be printed at its first occurrence, and the short form will not be printed at all. You can also force the use of long/short/full form with \verb|\acl{hpc}|, \verb|\acs{hpc}|, and \verb|\acf{hpc}|, respectively.
+
+Because this demo intentionally uses \verb|sidenote| mode, comments from
+\verb|\annotate| appear in the right margin of this page.  The margin is
+\emph{expanded outward}, meaning that the body text column retains
+\emph{exactly the same width} as it will have in the final submission.
+This ensures that line breaks, section spacing, and figure/table
+placement visible in draft mode faithfully reflect the final camera-ready
+output.  To help visualize the true printable region, the class draws a
+vertical guideline along the actual letterpaper boundary.
+
+When using \verb|final| mode, all annotations disappear entirely, including this one,\annotate[yw]{This summary uses annotation only for demonstration. For NSF submissions, margin comments are not allowed in the final version, but draft-mode margin notes are convenient for multi-PI coordination.} and the margin collapses back to standard NSF width. You can also insert inline comments, even in the \verb|sidenote| mode, using \verb|\annotate*|, which will appear in the text body and take up space as normal text.
+\annotate*[yw]{This sentence is an example of inline comments.}
+A list of all annotations is automatically generated at the end of the document in the \texttt{draft} mode, and can be used to track all comments and suggestions from multiple authors. In addition, you can also \hl{highlight} or \sout{strike through}.
+
+% ----------------------------------------------------------------------
+% Wrapped visual: figure + table combined via \mywrap (tight version)
+%   - Non-star form \mywrap[...] gives a more compact layout.
+%   - We use \captionof + \label inside \mywrap, and \cref in the text.
+% ----------------------------------------------------------------------
+\mywrap[r]{0.4\textwidth}{%
+    \centering
+    \dummyfigure{\linewidth}{0.618\linewidth}{Wrapped Figure}
+    \myCaptionOf{figure}{Theme visual.}{The story-telling conceptual visual of the proposal.}\label{fig:wrapped}
+    \vspace{4pt}
+    \captionof{table}{Metric table with highlighted row.}\label{tab:wrapped}
+    \begin{adjustbox}{max width=\linewidth}
+        \begin{tabular}{%
+            r%
+            S[table-format=-3.2]%
+            >{\bfseries}S[table-format=-3.2]%
+            S[table-format=-1.2e-1]%
+            }
+            \toprule
+            \textbf{Metrics} & \textbf{Normal} & \textbf{Bold} & \textbf{Scientific Notation} \\
+            \midrule
+            SOTA 1           & 111             & 111           & 2.01e-9                      \\
+            SOTA 2           & 222.2           & 222.2         & 2.1e-12                      \\
+            \rowcolor{rowgray}
+            SOTA 3           & 3.33            & 3.33          & -1.15e3                      \\
+            SOTA 4           & 4               & -4            & 5.1e6                        \\
+            SOTA 5           & -5.5            & 5.5           & \bfseries 8e-15              \\
+            \bottomrule
+        \end{tabular}
+    \end{adjustbox}
+}
+The combined summary visual in \cref{fig:wrapped,tab:wrapped}
+follows a pattern typical of an executive summmary: a compact, story-telling architectural sketch and a table of headline numbers placed in a wrapped panel using the convenience macro
+\verb|\mywrap|. The figure in \cref{fig:wrapped} conveys the high-level concept of the proposal, while the table in \cref{tab:wrapped} highlights key performance metrics and improvements over the state of the art. The references to the figure and table are automatically generated by \verb|\cref| and automatically bolded. \annotate[yw]{Single wrapped panel with one figure and one table is often sufficient for a one-page project summary.}
+
+Following the one-page project summary, the class provides a template for detailed project description. This demo will showcase additional class features, including:
+\begin{enumerate*}[label=\bfseries\arabic*)]
+    \item the \texttt{acro} barrier inserted between summary and description, allowing acronyms to be introduced separately;
+    \item full figure, sub-figure, table, and algorithm cross-referencing with \texttt{cleveref};
+    \item tight vs.\ relaxed wrapping using the starred and non-starred forms of \verb|\mywrap|;
+    \item a complete \texttt{algorithm2e} example with custom fonts, caption formatting, and integrated comments; and
+    \item annotation features (\verb|\annotate|) in all modes:
+          anonymous notes, pre-registered authors, auto-registered authors,
+          starred vs.\ non-starred forms, and draft-only visibility.
+\end{enumerate*}
+In addition, one can customize the name of the summary and description chapters shown in the left footer of the \verb|draft| mode by redefining the \verb|\one@summaryname| and \verb|\one@descriptionname| macros in the preambles before \verb|\begin{document}|, as shown below.
+\begin{Verbatim}
+    \makeatletter
+    \renewcommand{\one@summaryname}{Executive Summary}
+    \renewcommand{\one@descriptionname}{Technical Description}
+    \makeatother
+\end{Verbatim}
+
+\keywords{co-packaged optics, integrated photonics, \LaTeX\ class, proposal formatting}
+
+
+% ======================================================================
+% Project Description
+%   - Title page is regenerated, acronyms are "reset" by \acbarrier.
+% ======================================================================
+
+\maketitledescription
+
+\section{Overview and Class Options}
+
+The description starts on a fresh page with page numbers reset and a different left footer. Internally, \verb|\maketitledescription| invokes \verb|\acbarrier|, which means that acronyms are ``reset'': the first uses of \ac{cpo} and \ac{ai} in this section again expand to their long+short forms, independent of the summary. For example, \ac{cpo} and \ac{ai} in the previous sentence are treated as new first uses. If we refer to \acs{cpo} once more in this paragraph, only the short form appears, mirroring how one would reintroduce acronyms in a new major chapter of a proposal.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \dummyfigure{\linewidth}{0.9\linewidth}{Subfigure (a)}
+        \phantomcaption\label{subfig:a}
+    \end{subfigure}%
+    \hfill%
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \dummyfigure{\textwidth}{0.9\textwidth}{Subfigure (b)}
+        \phantomcaption\label{subfig:b}
+    \end{subfigure}%
+    \hfill%
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \dummyfigure{\textwidth}{0.9\textwidth}{Subfigure (c)}
+        \phantomcaption\label{subfig:c}
+    \end{subfigure}
+    \myCaption{Short description.}{\subref{subfig:a}~Subfigure (a), \subref{subfig:b}~Subfigure (b), \subref{subfig:c}~Subfigure (c)}\label{fig:arch}
+\end{figure}
+
+\subsection{Methodology}
+
+\kant[5-6]
+
+\subsubsection{Algorithm Example}
+
+\mywrap[l]{0.5\textwidth}{%
+    \begin{algorithm}[H]
+        \SetKwFunction{APC}{AllPossibleConfigs}
+        \SetKwFunction{ES}{ExhaustiveSearch}
+        \SetKwFunction{IT}{IterationTime}
+        \caption{\textsc{BinarySearch} for Feasible \# of CU}\label{alg:binary_search}
+        \KwIn{$\widetilde{N}_\mathrm{cu}$, $N_\mathrm{cu}$, $C_\mathrm{cu}$}
+        \KwOut{Min CU count and corresponding parallelism config (if any)}
+        $L \gets \widetilde{N}_\mathrm{cu}$, $R \gets N_\mathrm{cu}$, $\mathrm{optim\_config} \gets \emptyset$\;
+        \While{$L \leq R$}{
+            $m \gets \lfloor (L + R) / 2 \rfloor$\;
+            $\mathrm{configs} \gets$ \APC{$m$}\;
+            $\mathrm{valid} \gets$ \ES{$\mathrm{configs}, C_\mathrm{cu}$}\;
+            \eIf{$\mathrm{valid} \neq \emptyset$}{
+                $\mathrm{optim\_config} \gets \arg\min_{c \in \mathrm{valid}}$\,\IT{$\mathrm{config}$}\;
+                $R \gets m - 1$  \tcp*{Try fewer CUs}
+            }{
+                $L \gets m + 1$  \tcp*{Need more CUs}
+            }
+        }
+        \tcp{No valid configuration found if $\mathrm{optim\_config}$==$\emptyset$}
+        \KwRet ($L, \mathrm{optim\_config}$)\;
+    \end{algorithm}
+}
+
+\paragraph{Discussion} \kant[7-8]
+
+\kant[7-8]
+
+URL test: \url{https://www.overleaf.com/learn/latex/Hyperlinks}. Long URL test: \url{https://www.overleaf.com/learn/latex/Hyperlinks#Long_URL}.
+
+\cite{wangCoDesignedSiliconPhotonics2025}
+
+\clearpage
+\bibliographystyle{cls/oneabbrv}
+\bibliography{main}
+
+\end{document}
